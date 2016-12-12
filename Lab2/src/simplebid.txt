@@ -1,0 +1,11 @@
+Ada K 40
+Bengt S 40
+Olle S 40
+Lisa K 50
+Nils NK 10 20
+Sofia NS 20 30
+Sissel K 10
+Josse K 10
+Misty S 20
+Tobias S 22
+Misty NS 20 23

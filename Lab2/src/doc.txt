@@ -1,0 +1,45 @@
+DOCUMENTATION AND ANALYSIS OF CODE
+==================================
+
+Insertion of bid
+----------------
+Since the height of a heap is limited by log n the insertion will take O(log n) at most (if we insert an element that we
+need to bubble all the way to the top of the heap).
+
+<<insert function>>: Adding the element to the end of the array list, retrieving the index that is the size-1 and putting it
+in the hash map all requires constans time, O(1). Comparing also takes O(1) since we merely compare their values, so
+we have bubble up left.
+
+<<bubbleUp function>>: The help function swap takes O(1) as well, since set and mapping takes no effort really. What is time
+consuming here is retrieving the parent. In worst case scenario we have to go through almost the whole heap
+in order to find the parent, but again, since the height is limited by log n, it will only take O(log n) time.
+
+Go through with a bid
+------------------
+This is all in the trade function in Lab2. Checking if the list is empty and retrieving the top element in the heap take
+O(1) time. In this case it is the deleteTop function that is the most time consuming.
+
+<<deleteTop function>>: Everything down to bubbleDown takes O(1) time.
+
+<<bubbleDown function>>: As long as the boolean doneSwapping is false, the function will use the help method swap in order
+to swap the parent with either the left or the right child. And the same goes here: In worst case scenario we might have to
+bubble all the way down from the top to a leaf, and since the height is limited by log n, and we always move straight down
+and not sideways, this will take at most O(log n).
+
+Modifying a bid
+---------------
+Since we have implemented our binary heap with a hash map this will take O (log n) at most. Our method uses the same tactics
+as for bubble up and bubble down, which means this will also take at most O(log n) if we modify our value in such a way
+that we need to move it all the way to the top or all the way to the bottom.
+
+Printing priority queues
+------------------------
+Since our program uses deleteTop to print the order book, and we have already stated that deleteTop takes O(log n) time,
+our printing will also take O(log n) + O(log n) = 2 * O(log n) = O(log n) time. It will run for as long as the queues are
+not empty, which say, four times if we have four elements in our queue. That means it runs 4 * O(log n) = O(log n).
+
+Since our program uses deleteTop to print the order book, and we have already stated that deletetop takes O(log n) time,
+our printing time will take O(n*(log n)) time. ARGUMENT to why: if we put up a summation, where we want to take the sum of
+(log n) from i = 1 to n (because we perform the operation n times because there are n elements in the list). If we
+move the (log n) outside of the summation we are left with (log n) * S(1) (where S = summation). The sum of 1 from
+i = 1 to n is n, which means we get n*(log n) => The time complexity for printing is O(n*log n).

@@ -1,0 +1,20 @@
+DISCUSSION BINARY SEARCH
+========================
+First of all a binary search only works if the list is presorted. The reason to why the time complexity is log(N)
+is because we continuously divide the search field by *half*, by either increasing low or decreasing high. This way
+the size of the search field will get smaller logarithmically. Also, if we have an array Y that's twice the size as our first
+array X, then searching for a specific element in the array Y will take log(N) + 1 amount of time. The reason to this
+is because at first, if we don't find the element we're searching for, we decrease the size of Y by half and search in either
+the lower or the upper end. But by then, after only one search, we are left with an array with the same size as X, and we
+already now the time complexity for this, namely log(N). Therefore, for an array twice the size, the time complexity will be
+O(log(N) + 1) = O(log(N)) because we don't care about constants.
+
+WHY OUR CODE IS IMPLEMENTED CORRECTLY
+=====================================
+We made some tests of our own which our code passed through. Throughout our coding we have discussed and tried simple
+cases by hand, read the course literature and we have had a clear discussion about the code we have written, which
+we find to be logical.
+
+As a side note: Our code passed through all but the last test in the jar-file we downloaded. However, this seems to be
+because there was no file named "numbers.txt", so we didn't believe this to be because of our code. We did try the testing
+with our own test files, and they all worked.
