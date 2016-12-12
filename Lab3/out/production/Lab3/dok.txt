@@ -1,3 +1,5 @@
 KOMPLEXITETSANALYS
 ==================
 
+Målet med analysen är för att försäkra oss om att min implementation av Dijsktras Algoritm faktiskt tar O(v + e*log(v)) tid,
+där v är antalet noder och e är antalet kanter.

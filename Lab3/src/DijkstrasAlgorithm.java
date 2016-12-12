@@ -1,4 +1,5 @@
 import Lab3Help.Path;
+
 import java.util.*;
 
 public class DijkstrasAlgorithm<E> implements Path<E> {
@@ -9,7 +10,7 @@ public class DijkstrasAlgorithm<E> implements Path<E> {
     private Map<E, Integer> distance;
     private Map<E, E> previousNode;
     private Set<E> visited;
-    private PriorityQueue<Vertex<E>> queue;
+    private PriorityQueue<NodeCmpClass<E>> queue;
 
     private List<E> path;
     private int pathLength;
@@ -33,14 +34,14 @@ public class DijkstrasAlgorithm<E> implements Path<E> {
     @Override
     public void computePath(E from, E to) {
         distance.put(from, 0);
-        for(Vertex<E> v : vertexes){            // O(|V|)
+        for(Vertex<E> v : vertexes){            // O(|V|) //TODO fel här med Vertex, ska det vara inre klass ist?
             if(v.getName().equals(from)){
-                queue.add(v);
+                queue.add(new NodeCmpClass<>(v)); //bara v
             }
         }
 
         while(!queue.isEmpty()){
-            Vertex<E> v = queue.remove();
+            NodeCmpClass<E> v = queue.remove();
             if(!visited.contains(v.getName())){
                 visited.add(v.getName());
                 for(Edge<E> edge : adjList.get(v.getName())){
@@ -54,23 +55,23 @@ public class DijkstrasAlgorithm<E> implements Path<E> {
                         distance.put(destName, (distance.get(vertexName)) + edge.getWeight());
                         previousNode.put(destName, vertexName);
 
-                        NodeCmpClass<E> node = new NodeCmpClass<>(edge.getDestination());
+                        NodeCmpClass<E> node = new NodeCmpClass<>(edge.getDestination()); //TODO behöver jag skapa en ny nodecmpclass?
                         node.setDistance(distance.get(vertexName) + edge.getWeight());
-                        //queue.add(node);
+                        queue.add(node); //TODO vill ha den här istället, behöver ändra typ i PriorityQueue, och då förmodligen på rad 36-38
 
-                        edge.getDestination().setDistance((distance.get(v.getName())) + edge.getWeight());
-                        queue.add(edge.getDestination());
+                        //edge.getDestination().setDistance((distance.get(v.getName())) + edge.getWeight());
+                        //queue.add(edge.getDestination());
                     }
                 }
             }
         }
 
-        pathLength = distance.get(to);
+        /*pathLength = distance.get(to);
         E node = to;
         while(previousNode.get(node) != null){ //creates the path from 'from' to 'to'
             path.add(node);
             node = previousNode.get(node);
-        }
+        }*/
 
         Collections.reverse(path);
 
@@ -97,7 +98,7 @@ public class DijkstrasAlgorithm<E> implements Path<E> {
 
     @Override
     public Iterator<E> getPath() {
-        return path.iterator();
+        return path.iterator(); //TODO aldrig null
     }
 
     @Override
@@ -133,6 +134,10 @@ public class DijkstrasAlgorithm<E> implements Path<E> {
                 }
             }
             return 0;
+        }
+
+        public E getName() {
+            return vertex.getName();
         }
     }
 }
