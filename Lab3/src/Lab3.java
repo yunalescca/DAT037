@@ -17,7 +17,7 @@ public class Lab3 {
             List<BStop> bStops = lab3File.readStops("stops-gbg.txt");
             List<BLineTable> bLineTables = lab3File.readLines("lines-gbg.txt");
             String start = "Härlanda";
-            String end = "wha";
+            String end = "Centralstationen";
 
             Path<String> path = new DijkstraStringPath(bStops, bLineTables);
             //new GUI(bStops, bLineTables, path);

@@ -21,4 +21,16 @@ public class Edge<E>{
     public int getWeight() {
         return weight;
     }
+
+    @Override
+    public boolean equals(Object e){
+        if(e instanceof Edge<?>){
+            Edge<?> e1 = (Edge<?>) e;
+            if(this.getSource().getName().equals(e1.getSource().getName())
+                    && this.getDestination().getName().equals(e1.getDestination().getName())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

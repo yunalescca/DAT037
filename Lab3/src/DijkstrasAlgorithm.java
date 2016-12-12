@@ -5,7 +5,7 @@ import java.util.*;
 public class DijkstrasAlgorithm<E> implements Path<E> {
 
     private List<Vertex<E>> vertexes;
-    private Map<E, List<Edge<E>>> adjList;
+    private Map<E, Set<Edge<E>>> adjList;
 
     private Map<E, Integer> distance;
     private Map<E, E> previousNode;
@@ -44,6 +44,7 @@ public class DijkstrasAlgorithm<E> implements Path<E> {
             NodeCmpClass<E> v = queue.remove();
             if(!visited.contains(v.getName())){
                 visited.add(v.getName());
+                //System.out.println(adjList.get(v.getName()));
                 for(Edge<E> edge : adjList.get(v.getName())){
 
                     E destName = edge.getDestination().getName();
@@ -71,9 +72,10 @@ public class DijkstrasAlgorithm<E> implements Path<E> {
         while(previousNode.get(node) != null){ //creates the path from 'from' to 'to'
             path.add(node);
             node = previousNode.get(node);
-        }*/
-
+        }
         Collections.reverse(path);
+        */
+
 
         /* FÖRELÄSNING
         ==============
@@ -98,7 +100,10 @@ public class DijkstrasAlgorithm<E> implements Path<E> {
 
     @Override
     public Iterator<E> getPath() {
-        return path.iterator(); //TODO aldrig null
+        if(path.size() == 0){
+            return null;
+        }
+        return path.iterator();
     }
 
     @Override
