@@ -4,7 +4,7 @@ public class Graph<E> {
 
     private List<Edge<E>> edges;
     private List<Vertex<E>> vertexes;
-    private Map<E, Set<Edge<E>>> adjList;
+    private Map<E, List<Edge<E>>> adjList;
 
     public Graph(List<Edge<E>> edges, List<Vertex<E>> vertexes){
         this.edges = edges;
@@ -15,19 +15,15 @@ public class Graph<E> {
 
     private void generateVertices(){
         for(Vertex<E> vertex : vertexes){
-            System.out.println(vertex.getName());
-            Set<Edge<E>> adjacent = new HashSet<>();
+            List<Edge<E>> adjacent = new ArrayList<>();
             for(Edge<E> edge : edges){
                 if(edge.getSource().equals(vertex)){
-                    if(!edge.getDestination().getName().equals(vertex.getName())){ //TODO innan lade den in Angered i Angereds grannlista, det ska den väl inte göra? Men jag vill väl inte heller att typ Gammelstadstorget ligger med två gånger?
-                        //nu när den är ett set och jag har equals i edge bör den väl inte lägga in samma granne två gånger?
+                    if(!edge.getDestination().getName().equals(vertex.getName())
+                            && !adjacent.contains(edge)){ //TODO vill jag förhindra den ifrån att den lägger till sig själv i grannlistan samt att dubletter ej förekommer?
                         adjacent.add(edge);
-                        System.out.print(edge.getDestination().getName() + ", ");
                     }
                 }
             }
-            System.out.println();
-            System.out.println();
             adjList.put(vertex.getName(), adjacent);
         }
     }
@@ -40,7 +36,7 @@ public class Graph<E> {
         return vertexes;
     }
 
-    public Map<E, Set<Edge<E>>> getAdjList() { return adjList; }
+    public Map<E, List<Edge<E>>> getAdjList() { return adjList; }
 
     //Temp method
     private String getEdge(Vertex<E> vertex) {

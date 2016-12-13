@@ -25,14 +25,11 @@ public class Lab3 {
             path.computePath(start, end);
 
             if(path.getPath() == null){
-                System.out.println("tjosan1");
                 System.out.println("Det finns ingen väg mellan " + start + " och " + end);
             } else if(start.equals(end)){
-                System.out.println("tjosan2");
                 System.out.println(path.getPathLength() + "\n" + start);
-            } else {
-                System.out.println("tjosan3");
-                System.out.println(path.getPathLength() + "\n");
+            } else{
+                System.out.println(path.getPathLength());
                 Iterator<String> pathIterator = path.getPath();
                 while(pathIterator.hasNext()){
                     System.out.println(pathIterator.next());

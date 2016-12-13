@@ -5,7 +5,7 @@ import java.util.*;
 public class DijkstrasAlgorithm<E> implements Path<E> {
 
     private List<Vertex<E>> vertexes;
-    private Map<E, Set<Edge<E>>> adjList;
+    private Map<E, List<Edge<E>>> adjList;
 
     private Map<E, Integer> distance;
     private Map<E, E> previousNode;
@@ -34,7 +34,7 @@ public class DijkstrasAlgorithm<E> implements Path<E> {
     @Override
     public void computePath(E from, E to) {
         distance.put(from, 0);
-        for(Vertex<E> v : vertexes){            // O(|V|) //TODO fel här med Vertex, ska det vara inre klass ist?
+        for(Vertex<E> v : vertexes){            // O(|V|) //TODO fel här med Vertex?, ska det vara inre klass ist?
             if(v.getName().equals(from)){
                 queue.add(new NodeCmpClass<>(v)); //bara v
             }
@@ -44,11 +44,11 @@ public class DijkstrasAlgorithm<E> implements Path<E> {
             NodeCmpClass<E> v = queue.remove();
             if(!visited.contains(v.getName())){
                 visited.add(v.getName());
-                //System.out.println(adjList.get(v.getName()));
-                for(Edge<E> edge : adjList.get(v.getName())){
+                for(Edge<E> edge : adjList.get(v.getName())){ //TODO uppdaterar v fel?
 
                     E destName = edge.getDestination().getName();
                     E vertexName = v.getName();
+
 
                     if(!visited.contains(destName) &&
                             distance.get(destName) > (distance.get(vertexName)) + edge.getWeight()){
@@ -67,14 +67,14 @@ public class DijkstrasAlgorithm<E> implements Path<E> {
             }
         }
 
-        /*pathLength = distance.get(to);
+        pathLength = distance.get(to);
         E node = to;
         while(previousNode.get(node) != null){ //creates the path from 'from' to 'to'
             path.add(node);
             node = previousNode.get(node);
         }
         Collections.reverse(path);
-        */
+
 
 
         /* FÖRELÄSNING
@@ -94,7 +94,7 @@ public class DijkstrasAlgorithm<E> implements Path<E> {
                     if(v' not in k) and d[v'] > d[v] + c(v', v) then .... ( c = alternativa vägen via v)
                         d[v'] = d[v] + c(v', v)
                         p[v'] = v
-                        q.insert(v', d[v']
+                        q.insert(v', d[v'])
         return (d,p)*/
     }
 

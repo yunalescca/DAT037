@@ -10,5 +10,5 @@ FRÅGOR
 - Har skapat inre klass, bör jag byta ut alla ställen med Vertex till den istället?
 - Lägger in i kön två gånger?
 - TODOS
-- lägger in samma granne två gånger (graph)
+- lägger in samma granne två gånger (graph) (fungerade inte med set men fungerar när jag använder !contains)
 - suppress warnings-fel
