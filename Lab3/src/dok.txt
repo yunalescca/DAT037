@@ -4,11 +4,20 @@ KOMPLEXITETSANALYS
 Målet med analysen är för att försäkra oss om att min implementation av Dijsktras Algoritm faktiskt tar O(v + e*log(v)) tid,
 där v är antalet noder och e är antalet kanter.
 
-FRÅGOR
-- Baserat på feedback gjorde jag x skillnader i koden
-- Kan inte starta testprogrammet
-- Har skapat inre klass, bör jag byta ut alla ställen med Vertex till den istället?
-- Lägger in i kön två gånger?
-- TODOS
-- lägger in samma granne två gånger (graph) (fungerade inte med set men fungerar när jag använder !contains)
-- suppress warnings-fel
+Den första tidskomplexitetsanalysen är rätt straight-forward. På rad 31 när vi loopar igenom alla vertixes gör vi det
+för att lägga in startnoden i hashmaps. I värsta fall får vi loopa igenom alla vertixes vi har för att nå den noden,
+vilket resulterar i O(|V|) tid.
+
+På rad 44 kommer vi in i själva algoritmen.
+
+På rad 48 vill vi hitta alla edges i en nods grannlista. Den här loopen kommer ta O(|E|) i tid eftersom vi måste loopa
+igenom alla edges vi har.
+
+I for-loopen gör vi en tilläggning i kön, (queue.add), vilket i Javas bilbiotek tar O(log n) tid, eller i vårt fall,
+O(log V) tid, eftersom det är noder/vertixes vi har i prioritetskön. Som argumenterat på förra labben kan man i värsta
+fall behöva bubbla upp till toppen, vilket är log V.
+Eftersom det här ligger i for-loopen som körs E gånger, kommer det totalt ta O(|E|*log(|V|)) tid.
+
+Till slut har vi ...
+
+vilket efter beräknar leder till att den totala tidskomplexiteten för Dijkstras Algoritm tar O(|V| + |E|*log(|V|)).

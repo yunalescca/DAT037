@@ -19,7 +19,7 @@ public class Graph<E> {
             for(Edge<E> edge : edges){
                 if(edge.getSource().equals(vertex)){
                     if(!edge.getDestination().getName().equals(vertex.getName())
-                            && !adjacent.contains(edge)){ //TODO vill jag förhindra den ifrån att den lägger till sig själv i grannlistan samt att dubletter ej förekommer?
+                            && !adjacent.contains(edge)){
                         adjacent.add(edge);
                     }
                 }
@@ -37,27 +37,4 @@ public class Graph<E> {
     }
 
     public Map<E, List<Edge<E>>> getAdjList() { return adjList; }
-
-    //Temp method
-    private String getEdge(Vertex<E> vertex) {
-        String string = "";
-        for(Edge<E> edge : edges){
-            if(edge.getSource().equals(vertex) || edge.getDestination().equals(vertex)) {
-                string += "Source : " + edge.getSource().getName() + ", dest: " + edge.getDestination().getName() +
-                        ", weight: " + edge.getWeight() + "\n";
-            }
-        }
-        return string;
-    }
-
-    //Temp method
-    @Override
-    public String toString(){
-        System.out.println("VERTEXES");
-        for(Vertex<E> vertex : vertexes){
-            System.out.println(vertex.getName());
-            System.out.println(getEdge(vertex));
-        }
-        return "";
-    }
 }

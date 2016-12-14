@@ -37,9 +37,7 @@ public class DijkstraStringPath implements Path<String>{
                 }
             }
         }
-
         Graph<String> graph = new Graph<>(edges, vertexes);
-
         dijsktra = new DijkstrasAlgorithm<>(graph);
     }
 
