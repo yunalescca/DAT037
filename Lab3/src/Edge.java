@@ -22,6 +22,7 @@ public class Edge<E>{
         return weight;
     }
 
+    //Two edges are equal if their start node and end node are the same
     @Override
     public boolean equals(Object e){
         if(e instanceof Edge<?>){

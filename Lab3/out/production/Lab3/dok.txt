@@ -1,23 +1,38 @@
 KOMPLEXITETSANALYS
 ==================
 
-Målet med analysen är för att försäkra oss om att min implementation av Dijsktras Algoritm faktiskt tar O(v + e*log(v)) tid,
+Målet med analysen är för att försäkra oss om att min implementation av Dijsktras Algoritm faktiskt tar O(V + E*log(V)) tid,
 där v är antalet noder och e är antalet kanter.
 
 Den första tidskomplexitetsanalysen är rätt straight-forward. På rad 31 när vi loopar igenom alla vertixes gör vi det
 för att lägga in startnoden i hashmaps. I värsta fall får vi loopa igenom alla vertixes vi har för att nå den noden,
 vilket resulterar i O(|V|) tid.
 
-På rad 44 kommer vi in i själva algoritmen.
+På rad 44 kommer vi in i själva algoritmen. While-looping kommer köra så länge kön inte är tom, och som max kan kön bli
+lika stor som antalet noder vi har (eftersom vi tar add av en nod längre ner). Dvs, while-loopen kommer köra som mest
+V gånger -> O(|V|)
+While-loopen kommer köra så länge kön inte är tom, och som max kan kön bli lika stor som alla möjliga grannar, om nu
+varje nod v har varandra som granne, dvs V(V-1) = V^2-V ==> O(V^2) (Det här är en uppskattat högre gräns än det faktiska
+svaret, men det kommer förklaras längre ner).
+
+På nästa rad körs remove på kön där den kommer plocka ut den noden som har kortast weight, och remove på en kö i Java
+tar O(log v^2) tid, eftersom man kan i värsta fall behöva bubbla ner det topp-elementet till botten (som i Labb 2).
+Den här operationen kommer köras varje gång vi börjar om i while-loopen, dvs totalt O(|V^2|*log|V^2|) = O(2*V^2*logV) i tid.
 
 På rad 48 vill vi hitta alla edges i en nods grannlista. Den här loopen kommer ta O(|E|) i tid eftersom vi måste loopa
-igenom alla edges vi har.
+igenom alla edges vi har. Med andra ord kommer den loopa E gånger, eftersom i teorin kan en nod ha alla andra noder som
+grannar (förutom sig själv), vilket betyder den kommer ha alla bågar/edges utstickande från sig själv.
 
 I for-loopen gör vi en tilläggning i kön, (queue.add), vilket i Javas bilbiotek tar O(log n) tid, eller i vårt fall,
-O(log V) tid, eftersom det är noder/vertixes vi har i prioritetskön. Som argumenterat på förra labben kan man i värsta
-fall behöva bubbla upp till toppen, vilket är log V.
-Eftersom det här ligger i for-loopen som körs E gånger, kommer det totalt ta O(|E|*log(|V|)) tid.
+O(log V^2) tid, eftersom det är noder/vertixes vi har i prioritetskön. Som argumenterat på förra labben kan man i värsta
+fall behöva bubbla upp till toppen, vilket är log V^2 (ty storleken är V^2).
+Eftersom det här ligger i for-loopen som körs E gånger (se ovan), kommer det totalt ta O(|E|*log(|V^2|)) = O(2*|E|*logV) tid.
 
-Till slut har vi ...
+Till slut har vi alltså O(|V| + 2*V^2*log|V| + |2*E|*log|V|)   (== O(V + V^2*logV + E*logV).
 
-vilket efter beräknar leder till att den totala tidskomplexiteten för Dijkstras Algoritm tar O(|V| + |E|*log(|V|)).
+=O(V + (E+V^2)(logV)). Eftersom V^2 > E, eller O(V^2) > O(E), innebär det att det jag kommit fram till är en ännu högre
+gräns än det rätta svaret, vilket i sin tur kanske är en övre gräns en det faktiska svaret. Om vi vet att det aldrig kommer
+ta mer än O(E) i tid, så vet vi därför med säkerhet att det aldrig kommer ta mer än O(V^2) i tid. En sådan övre gräns
+kan med säkerhet plockas bort då vi vet att den aldrig kommer över vår undre gräns, så vi har endast E kvar.
+
+Det vill säga : O(V + V^2*logV + E*logV) = -->O(V + E*logV)<--.

@@ -13,13 +13,16 @@ public class Graph<E> {
         generateVertices();
     }
 
+    /**
+     * For each vertex, see if the edge has this as source. If yes, add the whole edge to the adjacency list.
+     */
     private void generateVertices(){
         for(Vertex<E> vertex : vertexes){
             List<Edge<E>> adjacent = new ArrayList<>();
             for(Edge<E> edge : edges){
                 if(edge.getSource().equals(vertex)){
                     if(!edge.getDestination().getName().equals(vertex.getName())
-                            && !adjacent.contains(edge)){
+                            && !adjacent.contains(edge)){ //Only keep one of the same neighbour
                         adjacent.add(edge);
                     }
                 }

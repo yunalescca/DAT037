@@ -16,10 +16,12 @@ public class DijkstraStringPath implements Path<String>{
         ArrayList<Vertex<String>> vertexes = new ArrayList<>();
         ArrayList<Edge<String>> edges = new ArrayList<>();
 
+        //Add all bus stops to the vertex list
         for(BStop stop : bStops){
             vertexes.add(new Vertex<>(stop.getName()));
         }
 
+        //Add to edges list, the start node, end node, and the distance between
         for (BLineTable bLineTable : bLineTables) {
             BLineStop[] stops = bLineTable.getStops();
             for (int j = 0; j < stops.length; j++) {
@@ -27,11 +29,24 @@ public class DijkstraStringPath implements Path<String>{
                 Vertex<String> start, dest;
                 int weight = stops[j].getTime();
 
-                if (weight > 0) {
+                if (j > 0) {
                     start = new Vertex<>(stops[j - 1].getName());
                     dest =  new Vertex<>(stops[j].getName());
-                    edges.add(new Edge<>(start, dest, weight));
-                } else {
+
+                    Edge<String> edge = new Edge<>(start, dest, weight);
+
+                    for(int i = 0; i < edges.size(); i++){
+                        Edge<String> temp = edges.get(i);
+
+                        if(temp.equals(edge)){ //if there already exists an edge but with a higher weight, remove it
+                            if(edge.getWeight() < temp.getWeight()){
+                                edges.remove(i);
+                            }
+                        }
+                    }
+                    edges.add(edge);
+
+                } else { //if j == 0 then we are at our start node
                     start = new Vertex<>(stops[j].getName());
                     edges.add(new Edge<>(start, start, weight));
                 }

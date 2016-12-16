@@ -10,6 +10,7 @@ public class Vertex<E>{
         return name;
     }
 
+    //Two vertexes are equal if their names are equal
     @Override
     public boolean equals(Object v){
         if(v instanceof Vertex<?>){

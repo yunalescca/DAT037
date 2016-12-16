@@ -1,23 +1,42 @@
 KOMPLEXITETSANALYS
 ==================
 
-Målet med analysen är för att försäkra oss om att min implementation av Dijsktras Algoritm faktiskt tar O(v + e*log(v)) tid,
+Målet med analysen är för att försäkra oss om att min implementation av Dijsktras Algoritm faktiskt tar O(V + E*log(V)) tid,
 där v är antalet noder och e är antalet kanter.
 
 Den första tidskomplexitetsanalysen är rätt straight-forward. På rad 31 när vi loopar igenom alla vertixes gör vi det
 för att lägga in startnoden i hashmaps. I värsta fall får vi loopa igenom alla vertixes vi har för att nå den noden,
 vilket resulterar i O(|V|) tid.
 
-På rad 44 kommer vi in i själva algoritmen.
+På rad 44 kommer vi in i själva algoritmen: While-loopen kommer köra så länge kön inte är tom, och kön man som max bli
+lika stor som antalet gånger vi kör add/lägger till en nod i kön (sker längre ner). Som det kommer förklaras längre ner,
+så kör vi add maximalt E antal gånger. Det innebär att While-loopen i sig också kommer köra E gånger, då vi utför remove
+lika många gånger.
+
+På nästa rad körs remove på kön där den kommer plocka ut den noden som har kortast weight, och remove på en kö i Java
+tar O(log n) tid, eftersom man kan i värsta fall behöva bubbla ner toppelementet till bottem (som i Labb 2). I vårt fall
+kommer det dock bli O(log E), då vår kö kommer bli E stor (och inte n). Det är noder vi lägger till i kön, ja, men vi
+lägger till saker i kön E gånger (som förklaras längre ner), vilket resulterar i att kön blir E stor.  Den här operationen
+kommer köras varje gång vi börjar om i while-loopen, dvs totalt O(|E|*log|E|) i tid.
 
 På rad 48 vill vi hitta alla edges i en nods grannlista. Den här loopen kommer ta O(|E|) i tid eftersom vi måste loopa
-igenom alla edges vi har.
+igenom alla edges vi har. För varje vertex kollar vi på alla edges som går ut från den här node, det vill säga alla
+grannarna till noden. Den här processen kommer ske för alla vertexes i grafen, vilket innebär att vi kommer täcka alla
+edges. Med andra ord kommer den loopa E gånger.
 
 I for-loopen gör vi en tilläggning i kön, (queue.add), vilket i Javas bilbiotek tar O(log n) tid, eller i vårt fall,
-O(log V) tid, eftersom det är noder/vertixes vi har i prioritetskön. Som argumenterat på förra labben kan man i värsta
-fall behöva bubbla upp till toppen, vilket är log V.
-Eftersom det här ligger i for-loopen som körs E gånger, kommer det totalt ta O(|E|*log(|V|)) tid.
+O(log E) tid. Som argumenterat på förra labben kan man i värsta fall behöva bubbla upp till toppen, vilket är log E.
+Eftersom det här ligger i for-loopen som körs E gånger (se ovan), kommer det totalt ta O(|E|*log(|E|)) = O(|E|*log E) tid.
 
-Till slut har vi ...
+Till slut har vi alltså O(V + E*logE + E*logE) = O(V + E*logE).
 
-vilket efter beräknar leder till att den totala tidskomplexiteten för Dijkstras Algoritm tar O(|V| + |E|*log(|V|)).
+Som det står i Labb-PM vill vi ha en tidskomplexitet på O(V + E*logV) tid. Det som också står i Labb-PM är att vi kan
+utgå ifrån att vi inte jobbar med en multigraf, så mellan varje par av noder kan det finnas max en edge. Det innebär att
+E kommer begränsas av V, Skillnad är att i en multigraf kan det finnas hur många edges som helst mellan varje par av noder, och då är
+den inte begränsad av något.
+Har vi en graf med t.ex V = 3, så är E <= (V = 3), och ju högre V blir desto mer märker vi att E < V^2, inte endast V.
+Och om E < V^2 så är log E < (log V^2 = 2*logV). I tidskomplexitet kommer det innebära att O(log E) < O(2*log V) = O(log V), så
+vi har fått en lägre gräns än det i Labb-PM. På grund av det här bör vi öka gränsen för att få en korrekt värstafallskomplexitet,
+det vill säga O(log V). Det innebär att den slutliga tidskomplexitetsanalysen blir
+
+----> O(V + E*logV) <----
