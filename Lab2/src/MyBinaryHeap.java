@@ -17,6 +17,7 @@ public class MyBinaryHeap<E> implements MyPriorityQueue<E> {
         this.comp = comp;
         binHeapList = new ArrayList<>();
         map = new HashMap<>();
+        
     }
 
     /**
